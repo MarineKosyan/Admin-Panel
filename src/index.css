@@ -16,3 +16,9 @@ code {
   color: green;
   font-size: 25px;
 }
+.btn btn-default {
+  float: right;
+}
+.userName {
+  color: white;
+}

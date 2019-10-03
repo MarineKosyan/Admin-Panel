@@ -1,29 +1,51 @@
-import React from "react";
+import React, {useState} from "react";
+import Users from './Users';
+import Reports from './Reports';
 import {
-MDBNavbar, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBFormInline, MDBBtn} from "mdbreact";
-import { BrowserRouter as Router } from 'react-router-dom';
-export default () =>
+MDBNavbar, MDBNavbarNav, MDBNavItem, MDBNavLink,  MDBBtn,MDBTabContent} from "mdbreact";
+import { BrowserRouter as Router, Route  } from 'react-router-dom';
+
+const login = JSON.parse(localStorage.getItem('login'));
+
+const Menu = () => {
+
+  const [activeItem,setectiveItem] = useState(1);
+
+  const toggle = tab => () => {
+    if (activeItem !== tab) {
+    setectiveItem(tab);
+    }
+  }
+  return (
     <Router>
-     <MDBNavbar color="default-color" dark expand="md">
+     <MDBNavbar tabs color="default-color" dark expand="md">
        <MDBNavbarNav left>
          <MDBNavItem active>
-           <MDBNavLink to="#!">Users</MDBNavLink>
-            </MDBNavItem>
+           <MDBNavLink active={activeItem === 1}
+              onClick={toggle(1)} role="tab" to="/users">Users</MDBNavLink>
+         </MDBNavItem>
          <MDBNavItem>
-          <MDBNavLink to="#!">Reports</MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink to="#!">Notifications </MDBNavLink>
-              </MDBNavItem>
-          </MDBNavbarNav>
+           <MDBNavLink active={activeItem === 2}
+              onClick={toggle(2)} role="tab" to="/reports">Reports</MDBNavLink>
+         </MDBNavItem>
+         <MDBNavItem>
+           <MDBNavLink active={activeItem === 3}
+              onClick={toggle(3)} role="tab" to="notifications">Notifications </MDBNavLink>
+         </MDBNavItem>
+        </MDBNavbarNav>
         <MDBNavbarNav right>
           <MDBNavItem>
-            <MDBFormInline waves>
-              <div className="md-form my-0">
-               <MDBBtn rounded>Create</MDBBtn>
+              <div className = "userName">
+               Hello {login.username} ({login.role})
               </div>
-            </MDBFormInline>
         </MDBNavItem>
       </MDBNavbarNav>
     </MDBNavbar>
+    <MDBTabContent activeItem={activeItem} >
+    <Route exact path={'/users'} component={Users} />
+    <Route exact path={'/reports'} component={Reports} />
+    </MDBTabContent>
   </Router>
+);
+}
+export default Menu;

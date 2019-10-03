@@ -6,10 +6,12 @@ const Login = (props) => {
 
  const [username,setUserName] = useState("");
  const [password,setPassword] = useState("");
-
+ localStorage.setItem('login', JSON.stringify({username: 'Marine',
+                                role: 'PM'}));
 
  const onHandleClick = () => {
-   props.history.push('/admin');
+   props.history.push('/users');
+
  };
 
  const usernameHandleChange = (e) => {
@@ -46,7 +48,7 @@ return (
             onChange={passwordHandleChange}
           />
           <div className="text-center mt-4">
-            <MDBBtn type="submit" onClick = {onHandleClick}>Login</MDBBtn>
+            <MDBBtn type="button" onClick = {onHandleClick}>Login</MDBBtn>
           </div>
         </form>
       </MDBCol>
